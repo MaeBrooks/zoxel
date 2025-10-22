@@ -27,6 +27,7 @@ pub fn build(b: *std.Build) void {
     });
 
     addRaylib(b, exe);
+    addFlecs(b, exe);
 
     _ = setupRunStep(b, exe);
     _ = setupTestStep(b, exe, mod);
@@ -47,6 +48,12 @@ fn addRaylib(b: *std.Build, exe: *std.Build.Step.Compile) void {
     exe.linkLibrary(raylib_artifact);
     exe.root_module.addImport("raylib", raylib);
     exe.root_module.addImport("raygui", raygui);
+}
+
+fn addFlecs(b: *std.Build, exe: *std.Build.Step.Compile) void {
+    const zflecs = b.dependency("zflecs", .{});
+    exe.root_module.addImport("zflecs", zflecs.module("root"));
+    exe.linkLibrary(zflecs.artifact("flecs"));
 }
 
 fn setupRunStep(b: *std.Build, exe: *std.Build.Step.Compile) void {
