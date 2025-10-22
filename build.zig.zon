@@ -1,13 +1,13 @@
 .{
-  .name = .vox,
-  .version = "0.0.0",
-  .fingerprint = 0x13864396a6baaea7,
-  .minimum_zig_version = "0.15.0-dev.1034+bd97b6618",
-  .dependencies = .{
-    .raylib_zig = .{
-      .url = "git+https://github.com/raylib-zig/raylib-zig?ref=devel#163b1ef2e993fe7cc7c76bb3213d98612f4b7676",
-      .hash = "raylib_zig-5.6.0-dev-KE8REGNJBQDSjjyCmf4ATVQtk_OaBpY0B7kBxwSOPEGZ",
+    .name = .vox,
+    .version = "0.0.0",
+    .fingerprint = 0x13864396a6baaea7,
+    .minimum_zig_version = "0.15.0-dev.1034+bd97b6618",
+    .dependencies = .{
+        .raylib_zig = .{
+            .url = "git+https://github.com/raylib-zig/raylib-zig?ref=devel#163b1ef2e993fe7cc7c76bb3213d98612f4b7676",
+            .hash = "raylib_zig-5.6.0-dev-KE8REGNJBQDSjjyCmf4ATVQtk_OaBpY0B7kBxwSOPEGZ",
+        },
     },
-  },
-  .paths = .{ "build.zig", "build.zig.zon", "src", "include/raylib" },
+    .paths = .{ "build.zig", "build.zig.zon", "src", "include/raylib" },
 }
