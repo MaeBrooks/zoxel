@@ -1,0 +1,14 @@
+* Another Foss Voxel Game
+
+- Requires zig 14
+
+
+* Why?
+
+For fun! And because most of the alternatives out there have choices that we dislike.
+
+* Goals
+
+- The default standard is our standard: No custom formatter, zig's default format is enough
+- Keep it simple: Code should be easy to read, understand, and write
+- Mod support: No "addons". A mod should be contained in a folder, and it should have access to all the same code that we do.
