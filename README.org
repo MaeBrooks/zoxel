@@ -1,7 +1,6 @@
 * Another Foss Voxel Game
 
-- Requires zig 14
-
+- Requires Zig `0.15.1`
 
 * Why?
 
@@ -13,3 +12,4 @@ For fun! And because most of the alternatives out there have choices that we dis
 - Keep it simple: Code should be easy to read, understand, and write.
 - Mod support: No "addons". A mod should be contained in a folder, and it should have access to all the same code that we do.
 - Self contained: The game / engine should be compilable and runnable with *just* `git clone <this repo> && zig build run`
+- Debuggable: Errors and warnings should tell users what needs to be done to fix the problem, or suggests a fix.
