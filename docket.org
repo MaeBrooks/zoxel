@@ -1,0 +1,7 @@
+* GOALS For Zoxel a voxel based programming engine / game
+
+** TODO Get a cube rendered!
+** TODO Gets multiple cubes rendered!
+** TODO Server State vs Client State
+
+

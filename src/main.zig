@@ -1,26 +1,55 @@
 const std = @import("std");
-const rl = @import("raylib");
-const ecs = @import("zflecs");
+
+const flecs = @import("zflecs");
+
+const Components = @import("components.zig");
+const Config = @import("config.zig");
+const Renderer = @import("renderer.zig");
+const Systems = @import("systems.zig");
+const Tags = @import("tags.zig");
+const Mem = @import("mem.zig");
+
+const Phase = @import("phase.zig");
 
 pub fn main() !void {
-    const world = ecs.init();
-    defer _ = ecs.fini(world);
+    const world = flecs.init();
+		flecs.set_threads(world, @intCast(try std.Thread.getCpuCount()));
 
-    rl.initWindow(800, 450, "Vox");
-    defer rl.closeWindow();
+    Tags.defaults(world);
+    Components.defaults(world);
 
-    _ = ecs.ADD_SYSTEM(world, "draw_text", ecs.OnStore, draw_text);
+		const config: Config.T = .{ .target_fps = 0 };
+		const renderer = Renderer.init();
 
-    while (true) {
-        rl.beginDrawing();
-        defer rl.endDrawing();
-        rl.clearBackground(rl.getColor(0xFFAAFFFF));
+		{
+				flecs.singleton_add(world, Config.T);
+				flecs.singleton_add(world, Renderer.T);
+				_ = flecs.singleton_set(world, Config.T, config);
+				_ = flecs.singleton_set(world, Renderer.T, renderer);
+		}
 
-        if (rl.windowShouldClose()) ecs.quit(world);
-        if (!ecs.progress(world, 0.0)) break;
-    }
+		Phase._init(world);
+
+		const init_system = try Systems.OnInit.init(world);
+		const before_update_system = try Systems.OnBeforeUpdate.init(world);
+		const render_system = try Systems.OnRender.init(world);
+		const tick_system = try Systems.OnTick.init(world);
+
+		defer Mem.destroy(init_system);
+		defer Mem.destroy(before_update_system);
+		defer Mem.destroy(render_system);
+		defer Mem.destroy(tick_system);
+
+		try Systems.OnTick.add(my_on_tick_func);
+
+		while (!flecs.should_quit(world)) {
+				while (flecs.progress(world, 0)) {}
+		}
+
+		Systems.OnQuit.run(world);
 }
 
-fn draw_text(_: *ecs.iter_t) void {
-    rl.drawText("Hai :3", 190, 200, 20, rl.getColor(0x000000FF));
+
+fn my_on_tick_func(it: *flecs.iter_t) void {
+		std.debug.print("on_tick: {s}\n", .{ flecs.get_name(it.world, it.system).? });
 }

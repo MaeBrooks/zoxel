@@ -1,0 +1,28 @@
+Let’s briefly consider what additional capabilities a voxel engine should provide in order to create a
+game:
+
+* Lighting
+* State serialization and synchronization across a network
+* Physics/collision detection
+* AI features
+* Dynamic objects
+
+These are all systems that operate on the existing data. This isn’t even including the building and
+modification of the game world. To create anything resembling reality, the world usually also needs:
+
+* Terrain with interesting features
+* Trees
+* Vegetation
+* Water
+* Artificial structures
+
+Perhaps most importantly, people tend to expect or look forward to voxel engines with the following
+features:
+
+* Creating anything
+* Destroying everything
+* Procedural generation
+* Physical interactions on a per-voxel level
+* Alternate simulations (anything else that interacts with voxel data, e.g. vegetation growth, door
+ responses, “logic” like Minecraft’s redstone and pistons, and so on)
+* Voxel characters
