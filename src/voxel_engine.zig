@@ -19,10 +19,6 @@ pub fn Chunk(comptime height_: u8, comptime width_: u8, comptime depth_: u8) typ
 pub fn VoxelEngine(comptime initial_chunks: u8, chunk_size: u8) type {
     return struct {
         var size: u64 = initial_chunks;
-        var chunks: []Block = [initial_chunks]Chunk(
-            chunk_size,
-            chunk_size,
-            chunk_size
-        );
+        var chunks: []Block = [initial_chunks]Chunk(chunk_size, chunk_size, chunk_size);
     };
 }

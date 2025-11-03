@@ -9,4 +9,3 @@ pub fn defaults(world: *flecs.world_t) void {
 pub fn register(world: *flecs.world_t, comptime t: type) void {
     flecs.TAG(world, t);
 }
-

@@ -28,35 +28,35 @@ pub const T = struct {
         rl.closeWindow();
     }
 
-		pub fn begin_drawing(self: *const T) void {
-				rl.beginDrawing();
-				rl.clearBackground(self.flush_color);
-		}
+    pub fn begin_drawing(self: *const T) void {
+        rl.beginDrawing();
+        rl.clearBackground(self.flush_color);
+    }
 
-		pub fn overlay(_: *const T) !void {
-				var buf: [9]u8 = undefined;
-				const str = try std.fmt.bufPrintZ(&buf, "{}", .{ rl.getFPS() });
+    pub fn overlay(_: *const T) !void {
+        var buf: [9]u8 = undefined;
+        const str = try std.fmt.bufPrintZ(&buf, "{}", .{rl.getFPS()});
 
-				const x = @divFloor(rl.getScreenWidth(), 2);
-				const y = @divFloor(rl.getScreenHeight(), 2);
-				rl.drawText(str, x, y, 16, rl.getColor(0xFFFFFFFF));
-		}
+        const x = @divFloor(rl.getScreenWidth(), 2);
+        const y = @divFloor(rl.getScreenHeight(), 2);
+        rl.drawText(str, x, y, 16, rl.getColor(0xFFFFFFFF));
+    }
 
-		pub fn end_drawing(_: *const T) void {
-				rl.endDrawing();
-		}
+    pub fn end_drawing(_: *const T) void {
+        rl.endDrawing();
+    }
 
-		pub fn start(_: *const T, _: *const Config.T) void {
-				rl.initWindow(800, 450, "Vox");
-		}
+    pub fn start(_: *const T, _: *const Config.T) void {
+        rl.initWindow(800, 450, "Vox");
+    }
 
-		pub fn should_window_close(_: *const T) bool {
-				return rl.windowShouldClose();
-		}
+    pub fn should_window_close(_: *const T) bool {
+        return rl.windowShouldClose();
+    }
 };
 
 pub fn init() T {
-		return .{
-				.flush_color = rl.getColor(0xFFAAFFFF),
-		};
+    return .{
+        .flush_color = rl.getColor(0xFFAAFFFF),
+    };
 }
