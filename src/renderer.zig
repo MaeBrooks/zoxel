@@ -50,7 +50,7 @@ pub const T = struct {
 				rl.initWindow(800, 450, "Vox");
 		}
 
-		pub fn should_window_close(_: T) bool {
+		pub fn should_window_close(_: *const T) bool {
 				return rl.windowShouldClose();
 		}
 };

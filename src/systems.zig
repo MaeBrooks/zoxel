@@ -2,7 +2,6 @@ const std = @import("std");
 const flecs = @import("zflecs");
 
 const Config = @import("config.zig");
-const Renderer = @import("renderer.zig");
 const Mem = @import("mem.zig");
 const Phase = @import("phase.zig");
 
@@ -23,10 +22,7 @@ pub const OnInit = struct {
 				return system;
 		}
 
-		fn run(it: *flecs.iter_t) callconv(.c) void {
-				const renderer = flecs.singleton_get(it.world, Renderer.T).?;
-				const config = flecs.singleton_get(it.world, Config.T).?;
-				renderer.start(config);
+		fn run(_: *flecs.iter_t) callconv(.c) void {
 		}
 };
 
@@ -76,45 +72,9 @@ pub const OnBeforeUpdate = struct {
 				return system;
 		}
 
-		fn run(it: *flecs.iter_t) callconv(.c) void {
-				const renderer = flecs.singleton_get(it.world, Renderer.T).?;
-
-				if (renderer.should_window_close()) {
-						flecs.quit(it.world);
-				}
-		}
-};
-
-pub const OnRender = struct {
-		pub fn init(world: *flecs.world_t) !*flecs.system_desc_t {
-				var system = try init_system();
-				system.callback = OnRender.run;
-				system.immediate = false;
-
-				const config = flecs.singleton_get(world, Config.T).?;
-				if (config.target_fps != 0) {
-						system.interval = 1.0 / @as(f32, @floatFromInt(config.target_fps));
-				}
-
-				_ = flecs.SYSTEM(world, "on_render", flecs.PostUpdate, system);
-
-				return system;
-		}
-
-		fn run(it: *flecs.iter_t) callconv(.c) void {
-				const renderer = flecs.singleton_get(it.world, Renderer.T).?;
-
-				renderer.begin_drawing();
-				renderer.overlay() catch |e| {
-						std.debug.print("WARNING: Failed to draw overlay: {}\n", .{ e });
-				};
-				defer renderer.end_drawing();
-		}
+		fn run(_: *flecs.iter_t) callconv(.c) void {}
 };
 
 pub const OnQuit = struct {
-		pub fn run(world: *flecs.world_t) callconv(.c) void {
-				const renderer = flecs.singleton_get(world, Renderer.T).?;
-				renderer.end();
-		}
+		pub fn run(_: *flecs.world_t) callconv(.c) void {}
 };
